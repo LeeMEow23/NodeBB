@@ -99,6 +99,7 @@ module.exports = function (Groups) {
 	}
 
 	Groups.validateGroupName = function (name) {
+		console.log('Alexis, now enter Groups.validateGroupName function');
 		if (!name) {
 			throw new Error('[[error:group-name-too-short]]');
 		}
