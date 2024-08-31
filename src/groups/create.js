@@ -6,7 +6,6 @@ const slugify = require('../slugify');
 const db = require('../database');
 
 module.exports = function (Groups) {
-	console.log('Alexis, now enter the refactored code');
 	Groups.create = async function (data) {
 		const isSystem = isSystemGroup(data);
 		const timestamp = data.timestamp || Date.now();
@@ -99,7 +98,6 @@ module.exports = function (Groups) {
 	}
 
 	Groups.validateGroupName = function (name) {
-		console.log('Alexis, now enter Groups.validateGroupName function');
 		if (!name) {
 			throw new Error('[[error:group-name-too-short]]');
 		}
