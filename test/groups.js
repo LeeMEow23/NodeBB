@@ -84,19 +84,18 @@ describe('Groups', () => {
 		await Groups.join('administrators', adminUid);
 	});
 
-	describe('Group Existence', () => {
+	describe('Groups.create', () => {
 		it('should throw an error if the group already exists', async () => {
 			await Groups.create({ name: 'existingGroup' });
 			await assert.rejects(
-				checkGroupExistence('existingGroup'),
+				Groups.create({ name: 'existingGroup' }),
 				new Error('[[error:group-already-exists]]')
 			);
 		});
-		it('should not throw an error if the group does not exist', async () => {
-			await assert.doesNotReject(checkGroupExistence('nonExistingGroup'));
+		it('should create the group if it does not exist', async () => {
+			await assert.doesNotReject(Groups.create({ name: 'nonExistingGroup' }));
 		});
 	});
-
 
 	async function dummyEmailerHook(data) {
 		// pretend to handle sending emails
