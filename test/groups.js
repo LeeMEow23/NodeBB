@@ -15,6 +15,7 @@ const socketGroups = require('../src/socket.io/groups');
 const apiGroups = require('../src/api/groups');
 const meta = require('../src/meta');
 const navigation = require('../src/navigation/admin');
+const { checkGroupExistence } = require('../src/groups/create');
 
 
 describe('Groups', () => {
@@ -82,6 +83,20 @@ describe('Groups', () => {
 		});
 		await Groups.join('administrators', adminUid);
 	});
+
+	describe('Group Existence', () => {
+		it('should throw an error if the group already exists', async () => {
+			await Groups.create({ name: 'existingGroup' });
+			await assert.rejects(
+				checkGroupExistence('existingGroup'),
+				new Error('[[error:group-already-exists]]')
+			);
+		});
+		it('should not throw an error if the group does not exist', async () => {
+			await assert.doesNotReject(checkGroupExistence('nonExistingGroup'));
+		});
+	});
+
 
 	async function dummyEmailerHook(data) {
 		// pretend to handle sending emails
